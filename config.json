@@ -1,0 +1,13 @@
+{
+    "baseUrl": "http://localhost:5000",
+    "faceApiBaseUri": "https://centralindia.api.cognitive.microsoft.com/face/v1.0/detect",
+    "subscriptionKey": "9cf77d3c9d92490cabeb9d89722303b5",
+    "faceParams": {
+        "returnFaceId": false,
+        "returnFaceLandmarks": false,
+        "returnFaceAttributes": "age,gender,emotion,makeup,hair"
+    },
+    "endpoints": {
+        "faceDetailsByUrl": "/advertise/v1/face-details"
+    }
+}
