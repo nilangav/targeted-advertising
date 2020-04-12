@@ -1,24 +1,18 @@
-import express from 'express';
-import request from 'https';
-
+const express = require("express");
 const httpReq = require('request');
 
 const app = express();
 
-//subscription key.
-const subscriptionKey = '9cf77d3c9d92490cabeb9d89722303b5';
-
-const uriBase = 'https://centralindia.api.cognitive.microsoft.com/face/v1.0/detect';
+var config = require('./config.json');;
 
 // Request parameters.
 const params = {
-    'returnFaceId': 'true',
-    'returnFaceLandmarks': 'false',
-    'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
-        'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+    'returnFaceId': config.faceParams.returnFaceId,
+    'returnFaceLandmarks': config.faceParams.returnFaceLandmarks,
+    'returnFaceAttributes': config.faceParams.returnFaceAttributes
 };
 
-app.get('/advertise/v1/face-details', (req, res) => {
+app.get( config.endpoints.faceDetailsByUrl, (req, res) => {
     if (!req.query.imageUrl) {
         return res.status(400).send({
             success: 'false',
@@ -26,12 +20,12 @@ app.get('/advertise/v1/face-details', (req, res) => {
         })
     }
     const options = {
-        uri: uriBase,
+        uri: config.faceApiBaseUri,
         qs: params,
         body: '{"url": ' + '"' + req.query.imageUrl + '"}',
         headers: {
             'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': subscriptionKey
+            'Ocp-Apim-Subscription-Key': config.subscriptionKey
         }
     };
     httpReq.post(options, (error, response, body) => {
